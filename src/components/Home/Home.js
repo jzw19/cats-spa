@@ -5,11 +5,16 @@ import './Home.css';
 
 export const Home = () => {
     return(
-        <div>
+        <div className='homeContainer'>
             <p>The cat life</p>
             <img id='bubblesTunnel' src={bubbles} alt='black cat sitting in a fabric tunnel' />
             <figcaption>Bubbles</figcaption>
             <p>Look into my eyes...</p>
+            <p>Filler</p>
+            <p>Filler</p>
+            <p>Filler</p>
+            <p>Filler</p>
+            <p overflow='hidden'>Filler</p>
         </div>
     );
 }
