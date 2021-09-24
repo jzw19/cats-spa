@@ -1,16 +1,25 @@
 import { Menu, MenuItem, Button } from '@mui/material';
 import { makeStyles } from '@mui/styles';
+import { styled } from '@mui/material/styles';
 import React, { useState } from 'react';
 
 const useStyles = makeStyles({
     navBarContainer: {
-        backgroundColor: '#000000'
+        backgroundColor: '#1f1e1e'
     },
     button: {
-        backgroundColor: '#1f1e1e',
-        color: '#ffffff'
+        width: '15%',
+        minWidth: '90px',
+        whiteSpace: 'nowrap'
     }
 });
+
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+    backgroundColor: '#1f1e1e',
+    color: '#166ABD',
+    border: '1px solid #166ABD',
+    borderRadius: '4px'
+}))
 
 export const NavBar = () => {
     const classes = useStyles();
@@ -28,21 +37,19 @@ export const NavBar = () => {
     };
 
     const redirect = (event) => {
-        if(!window || !window.location) {
-            return;
-        }
         switch(event.target.id){
             case('home'):
-                window.location.pathname='/';
+                window.location.pathname = '/';
                 setSelectedMenuItem(null);
                 break;
             case('about'):
-                window.location.pathname='/about';
+                window.location.pathname = '/about';
                 setSelectedMenuItem(null);
                 break;
             case('bombay'):
             case('ocicat'):
             case('toybob'):
+                window.location.pathname = `/gallery/${event.target.id}`;
                 setSelectedMenuItem(event.target.id);
                 break;
             default:
@@ -63,21 +70,20 @@ export const NavBar = () => {
                 aria-expanded={ open ? 'true' : undefined }
                 onClick={handleMenuOpen}
             >
-                Cats Selection
+                Cat-alog
             </Button>
             <Menu
-                className='menu'
                 anchorEl={anchorEl}
                 open={open}
                 onClose={handleMenuClose}
                 MenuListProps={{
                     'aria-labelledby': 'menu-item',
-                    'backgroundColor': '#1f1e1e'
+                    disablePadding: true
                 }}
             >
-                <MenuItem id='bombay' sx={{backgroundColor: '#1f1e1e', color: '#ffffff'}} classes={classes.menuItem} divider selected={selectedMenuItem === 'bombay'} onClick={redirect}>Bombay</MenuItem>
-                <MenuItem id='ocicat' classes={classes.menuItem} divider selected={selectedMenuItem === 'ocicat'} onClick={redirect}>Ocicat</MenuItem>
-                <MenuItem id='toybob' classes={classes.menuItem} divider selected={selectedMenuItem === 'toybob'} onClick={redirect}>Toybob</MenuItem>
+                <StyledMenuItem id='bombay' divider selected={selectedMenuItem === 'bombay'} onClick={redirect}>Bombay</StyledMenuItem>
+                <StyledMenuItem id='ocicat' divider selected={selectedMenuItem === 'ocicat'} onClick={redirect}>Ocicat</StyledMenuItem>
+                <StyledMenuItem id='toybob' divider selected={selectedMenuItem === 'toybob'} onClick={redirect}>Toybob</StyledMenuItem>
             </Menu>
         </div>
     )

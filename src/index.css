@@ -8,10 +8,19 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: white;
+  color: lightgray;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.MuiMenuItem-root {
+  text-align: center;
+}
+
+.MuiPaper-root {
+  width: 15%;
+  min-width: 90px;
 }

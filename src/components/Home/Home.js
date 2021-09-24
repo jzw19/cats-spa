@@ -1,20 +1,21 @@
+import { makeStyles } from '@mui/styles';
 import React from 'react';
-import bubbles from '../../util/img/bubbles-tunnel.jpg';
+import Bubbles from '../../util/img/bubbles-tunnel.jpg';
 
-import './Home.css';
+const useStyles = makeStyles({
+    bubblesInATunnel: {
+        marginTop: '16px',
+        maxWidth: '30%'
+    }
+});
 
 export const Home = () => {
+    const classes = useStyles();
     return(
         <div className='homeContainer'>
-            <p>The cat life</p>
-            <img id='bubblesTunnel' src={bubbles} alt='black cat sitting in a fabric tunnel' />
+            <img className={classes.bubblesInATunnel} src={Bubbles} alt='black cat sitting in a fabric tunnel' />
             <figcaption>Bubbles</figcaption>
-            <p>Look into my eyes...</p>
-            <p>Filler</p>
-            <p>Filler</p>
-            <p>Filler</p>
-            <p>Filler</p>
-            <p overflow='hidden'>Filler</p>
+            <p>The one cat to rule them all</p>
         </div>
     );
 }
