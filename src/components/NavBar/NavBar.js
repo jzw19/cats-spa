@@ -2,6 +2,7 @@ import { Menu, MenuItem, Button } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import { styled } from '@mui/material/styles';
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles({
     navBarContainer: {
@@ -9,7 +10,7 @@ const useStyles = makeStyles({
     },
     button: {
         width: '15%',
-        minWidth: '90px',
+        minWidth: '120px',
         whiteSpace: 'nowrap'
     }
 });
@@ -23,6 +24,7 @@ const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
 
 export const NavBar = () => {
     const classes = useStyles();
+    const history = useHistory();
 
     const [anchorEl, setAnchorEl] = useState(null);
     const [selectedMenuItem, setSelectedMenuItem] = useState(null);
@@ -39,17 +41,17 @@ export const NavBar = () => {
     const redirect = (event) => {
         switch(event.target.id){
             case('home'):
-                window.location.pathname = '/';
+                history.push('/');
                 setSelectedMenuItem(null);
                 break;
             case('about'):
-                window.location.pathname = '/about';
+                history.push('/about');
                 setSelectedMenuItem(null);
                 break;
             case('bombay'):
             case('ocicat'):
             case('toybob'):
-                window.location.pathname = `/gallery/${event.target.id}`;
+                history.push(`/gallery/${event.target.id}`);
                 setSelectedMenuItem(event.target.id);
                 break;
             default:
