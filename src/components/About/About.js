@@ -1,13 +1,9 @@
 import { makeStyles } from '@mui/styles';
 import React from 'react';
 
-// TODO: need to figure out the proper way to center content vertically and horizontally on the page
 const useStyles = makeStyles({
     aboutContainer: {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)'
+        marginTop: '40vh'
     }
 });
 

@@ -9,7 +9,6 @@ export const gallerySlice = createSlice({
     },
     reducers: {
         setBombays: (state, action) => {
-            console.log(action.payload);
             state.bombays = action.payload;
         },
         setOcicats: (state, action) => {

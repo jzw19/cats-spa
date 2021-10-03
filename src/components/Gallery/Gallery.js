@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Grid, Button, Stack } from '@mui/material';
 import { makeStyles } from '@mui/styles';
 import React, { useState, useEffect } from 'react';
 
@@ -9,9 +9,21 @@ import Toybob from '../../util/img/toybob.jpg';
 import { useDispatch, useSelector } from 'react-redux';
 
 const useStyles = makeStyles({
+    header: {
+        marginBlock: '5vh'
+    },
+    description: {
+        marginBlock: '2vh'
+    },
     image: {
-        width: '20%',
-        margin: '10px'
+        width: '240px',
+        height: '240px'
+    },
+    galleryButtonContainer: {
+        marginBottom: '2vh'
+    },
+    fileNamesContainer: {
+        marginBottom: '3vh'
     }
 });
 
@@ -37,18 +49,58 @@ export const Gallery = () => {
     const getTitle = () => {
         switch(breed) {
             case 'bombay':
-                return <h3>Bombay</h3>;
+                return <h2 className={classes.header}>Bombay</h2>;
             case 'ocicat':
-                return <h3>Ocicat</h3>;
+                return <h2 className={classes.header}>Ocicat</h2>;
             case 'toybob':
-                return <h3>Toybob</h3>;
+                return <h2 className={classes.header}>Toybob</h2>;
             default:
                 return null;
         }
     }
 
+    const generateGridWrappedPhotos = (photosToDisplay) => {
+        let wrappedPhotos = [];
+        const offset = photosToDisplay.length % 4;
+        for(let i = 0; i < photosToDisplay.length - offset; i++) {
+            wrappedPhotos.push(
+                <Grid item xs={12} sm={6} lg={3}>
+                    {photosToDisplay[i]}
+                </Grid>
+            );
+        }
+        for(let i = photosToDisplay.length - offset || 0; i < photosToDisplay.length; i++) {
+            switch(offset) {
+                case 1:
+                    wrappedPhotos.push(
+                        <Grid item xs={12}>
+                            {photosToDisplay[i]}
+                        </Grid>
+                    );
+                    break;
+                case 2:
+                    wrappedPhotos.push(
+                        <Grid item xs={12} sm={6}>
+                            {photosToDisplay[i]}
+                        </Grid>
+                    );
+                    break;
+                case 3:
+                    wrappedPhotos.push(
+                        <Grid item xs={12} sm={4}>
+                            {photosToDisplay[i]}
+                        </Grid>
+                    );
+                    break;
+                default:
+            }
+        }
+        return wrappedPhotos;
+    }
+
     const renderCatPhotosByBreed = () => {
         let photosToDisplay;
+
         switch(breed) {
             case 'bombay':
                 photosToDisplay = bombays;
@@ -62,7 +114,8 @@ export const Gallery = () => {
             default:
                 photosToDisplay = [error];
         }
-        return photosToDisplay;
+
+        return generateGridWrappedPhotos(photosToDisplay);
     }
 
     const clickSelectImageInput = () => document.getElementById('selectImageInput').click();
@@ -73,7 +126,7 @@ export const Gallery = () => {
         if(selectImageInput) {
             for(const file of selectImageInput.files) {
                 nextFileNames.push(
-                    <div className='imageContainer'>
+                    <div className={classes.fileName}>
                         {file.name}
                         <br/>
                     </div>
@@ -85,41 +138,53 @@ export const Gallery = () => {
 
     const uploadSelectedFiles = () => {
         const selectedFiles = document.getElementById('selectImageInput').files;
-        for(const file of selectedFiles) {
-            switch(breed) {
-                case('bombay'):
-                    dispatch(setBombays([...bombays, <img className={classes.image} src={URL.createObjectURL(file)} alt='bombay cat'/>]));
-                    break;
-                case('ocicat'):
-                    dispatch(setToybobs([...toybobs, <img className={classes.image} src={URL.createObjectURL(file)} alt='toybob cat'/>]));
-                    break;
-                case('toybob'):
-                    dispatch(setOcicats([...ocicats, <img className={classes.image} src={URL.createObjectURL(file)} alt='ocicat cat'/>]));
-                    break;
-                default:
-            }
+        const newImages = [];
+        switch(breed) {
+            case('bombay'):
+                for(const file of selectedFiles) {
+                    newImages.push(<img className={classes.image} src={URL.createObjectURL(file)} alt='bombay cat'/>);
+                }
+                dispatch(setBombays([...bombays, ...newImages]));
+                break;
+            case('ocicat'):
+                for(const file of selectedFiles) {
+                    newImages.push(<img className={classes.image} src={URL.createObjectURL(file)} alt='ocicat cat'/>);
+                }
+                dispatch(setToybobs([...toybobs, ...newImages]));
+                break;
+            case('toybob'):
+                for(const file of selectedFiles) {
+                    newImages.push(<img className={classes.image} src={URL.createObjectURL(file)} alt='toybob cat'/>);
+                }
+                dispatch(setOcicats([...ocicats, ...newImages]));
+                break;
+            default:
         }
     }
 
     return(
-        <div className='galleryContainer'>
+        <div>
             {getTitle()}
-            <div>
+            <div className={classes.description}>
                 Upload your own cat photos!
             </div>
-            <div className='fileUploadContainer'>
+            <div className={classes.galleryButtonContainer}>
                 <input id='selectImageInput' data-testid='selectImageInput' type='file' onChange={renderSelectedFileNames} accept='.png, .jpg, .jpeg, .svg' multiple hidden/>
-                <Button variant='outlined' size='small' className={classes.button} onClick={clickSelectImageInput}>
-                    Select Photos
-                </Button>
-                <Button variant='outlined' size='small' className={classes.button} onClick={uploadSelectedFiles}>
-                    Upload
-                </Button>
+                <Stack spacing={2} direction='row' justifyContent='center' alignItems='center'>
+                    <Button variant='outlined' size='small' onClick={clickSelectImageInput}>
+                        Select Photos
+                    </Button>
+                    <Button variant='outlined' size='small' onClick={uploadSelectedFiles}>
+                        Upload
+                    </Button>
+                </Stack>
             </div>
-            <div className='selectedFileNamesContainer'>
+            <div className={classes.fileNamesContainer}>
                 {fileNames}
             </div>
-            {renderCatPhotosByBreed()}
+            <Grid container spacing={2} >
+                {renderCatPhotosByBreed()}
+            </Grid>
         </div>
     );
 };
