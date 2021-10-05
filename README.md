@@ -1,5 +1,20 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) template.
 
+## Instructions
+1. Clone the repo. You will need to have NPM and Yarn installed. Please follow instructions on their respective websites if this is something you need to do.
+2. You may need to run __yarn install__ to install packages.
+3. Run __yarn start__ to start the application.
+4. Have fun.
+  * Navigate with the menu options in the navigation bar at the top of the screen.
+  * Dropdown menus from the navigation bar must be closed manually by clicking the menu button again.
+  * You can select one or more files to upload by clicking the "Select Photo" button.
+    * To select multiple files, you must select the desired files from your file explorer in the same window (e.g. ctrl + left mouse button in the file explorer).
+  * Once files have been selected for upload, selecting different files by clicking the button again will replace the previously selected files.
+  * When all desired files have been selected, click the "Upload" button to display your files on the page.
+    * Clicking the "Upload" button consecutively will add the same images to the gallery.
+  * The only file formats that are accepted are .png, .jpg, .jpeg and .svg.
+  * Depending on the screen width, the gallery will display photos in an appropraite number of columns.
+
 ## Available Scripts
 
 In the project directory, you can run:
